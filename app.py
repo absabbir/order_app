@@ -1,8 +1,8 @@
-
 from flask import Flask, request, render_template_string
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+from waitress import serve  # এখানে waitress যুক্ত করুন
 
 app = Flask(__name__)
 
@@ -63,5 +63,6 @@ def submit():
     sheet.append_row([name, phone, address, size, time])
     return f"ধন্যবাদ {name}! আপনার অর্ডার নেওয়া হয়েছে। ✅"
 
+# Waitress দিয়ে অ্যাপ চালানো
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=8080)  # এখানে waitress দিয়ে অ্যাপ চালানো হচ্ছে
